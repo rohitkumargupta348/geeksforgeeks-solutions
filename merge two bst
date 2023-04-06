@@ -79,3 +79,58 @@ void merge(Node *root1, Node *root2)
  for(int i=0; i<a.size(); i++) cout<<a[i]<<" ";
  //cout<<'\n';
 }
+
+//Your Solution Gives TLE
+
+//Proposed Solution(Still can be optimised)
+TC-O(m+n
+SC-O(m+n)
+class Solution
+{
+    public:
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    void inorder(vector<int> &v, Node *r){
+    if(r){
+        inorder(v,r->left);
+        v.push_back(r->data);
+        inorder(v,r->right);
+    }
+    }
+    void mergeTwoArray(vector<int>&v1,vector<int> &v2,vector<int> &merge){
+        int i=0,j=0,k=0;
+        while(i<v1.size() && j<v2.size()){
+        if(v1[i]>v2[j]){
+            merge[k]=v2[j];
+            j++;
+            k++;
+        }
+        else{
+            merge[k]=v1[i];
+            i++;
+            k++;
+        }
+        }
+        while(i<v1.size()){
+        merge[k]=v1[i];
+        i++;
+        k++;
+        }
+        while(j<v2.size()){
+        merge[k]=v2[j];
+        j++;
+        k++;
+        }
+    }
+    vector<int> merge(Node *root1, Node *root2)
+    {
+       //Your code here
+        vector<int> v1;
+        vector<int> v2;
+        inorder(v1,root1);
+        inorder(v2,root2);
+        vector<int> merge(v1.size()+v2.size());
+        mergeTwoArray(v1,v2,merge);
+        return merge;
+    }
+};
